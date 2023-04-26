@@ -1,0 +1,73 @@
+{
+"Routes": [
+    {
+    "ServiceName": "ECOMCatalogService",
+    "DownstreamPathTemplate": "/{everything}",
+    "UpstreamPathTemplate": "/catalogAPI/{everything}",
+    "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+    ],
+    "FileCacheOptions": {
+        "TtlSeconds": 15
+    },
+    "LoadBalancerOptions": {
+        "Type": "LeastConnection",
+        "Key": null,
+        "Expiry": 0
+    }
+    },
+    {
+    "ServiceName": "ECOMCartService",
+    "DownstreamPathTemplate": "/{everything}",
+    "UpstreamPathTemplate": "/cartAPI/{everything}",
+    "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+    ],
+    "FileCacheOptions": {
+        "TtlSeconds": 15
+    },
+    "LoadBalancerOptions": {
+        "Type": "LeastConnection",
+        "Key": null,
+        "Expiry": 0
+    }
+    },
+    {
+    "ServiceName": "ECOMOrderService",
+    "DownstreamPathTemplate": "/{everything}",
+    "UpstreamPathTemplate": "/ordersapi/{everything}",
+    "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+    ],
+    "FileCacheOptions": {
+        "TtlSeconds": 15
+    },
+    "LoadBalancerOptions": {
+        "Type": "LeastConnection",
+        "Key": null,
+        "Expiry": 0
+    }
+    }
+],
+"GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5288",
+    "RequestIdKey": "OcRequestId",
+    "DownstreamScheme": "http",
+    "ReRoutesCaseSensitive": false,
+    "UseServiceDiscovery": true,
+    "ServiceDiscoveryProvider": {
+    "Host": "localhost",
+    "Port": 8761,
+    "Type": "Eureka"
+    }
+}
+}

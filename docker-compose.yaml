@@ -1,0 +1,112 @@
+version: "3.8"
+
+networks:
+  netECOM:
+    external: false
+
+services:
+  ECOMMongoCatalog:
+    container_name: ECOMMongoCatalog
+    image: mongo:latest
+    restart: always
+    hostname: ECOMMongoCatalog
+    ports:
+      - "2717:27017"
+    networks:
+      - netECOM
+  
+  ECOMRedisCart:
+    container_name: ECOMRedisCart
+    image: redis:latest
+    restart: always
+    hostname: ECOMRedisCart
+    ports:
+      - "6378:6379"
+    networks:
+      - netECOM
+  
+  ECOMSQLServerOrders:
+    container_name: ECOMSQLServerOrders
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
+    hostname: ECOMSQLServerOrders
+    ports:
+      - "1413:1433"
+    networks:
+      - netECOM
+    environment:
+      SA_PASSWORD: "abc123!!@"
+      ACCEPT_EULA: "Y"
+  
+  ECOMEurekaRegistry:
+    container_name: ECOMEurekaRegistry
+    image: steeltoeoss/eureka-server:latest
+    restart: always
+    hostname: ECOMEurekaRegistry
+    ports:
+      - "8761:8761"
+    networks:
+      - netECOM
+  
+  ECOMAPIGateway:
+    container_name: ECOMAPIGateway
+    build: 
+      context: ./APIGateway
+      dockerfile: Dockerfile
+    image: ecomapigateway:1
+    restart: always
+    hostname: ECOMAPIGateway
+    ports:
+      - "5288:80"
+    networks:
+      - netECOM
+  
+  ECOMCatalogServiceAPI:
+    container_name: ECOMCatalogServiceAPI
+    build: 
+      context: ./Catalog
+      dockerfile: Dockerfile
+    image: ecomcatalogserviceapi:1
+    restart: always
+    hostname: ECOMCatalogServiceAPI
+    ports: 
+      - "8080:8080"
+    networks:
+      - netECOM
+    depends_on:
+      - ECOMMongoCatalog
+      - ECOMEurekaRegistry
+      - ECOMAPIGateway
+  
+  ECOMCartServiceAPI:
+    container_name: ECOMCartServiceAPI
+    build: 
+      context: ./BasketService
+      dockerfile: Dockerfile
+    image: ecomcartserviceapi:1
+    restart: always
+    hostname: ECOMCartServiceAPI
+    ports:
+      - "3030:8080"
+    networks:
+      - netECOM
+    depends_on:
+      - ECOMRedisCart
+      - ECOMEurekaRegistry
+      - ECOMAPIGateway
+  ECOMOrdersServiceAPI:
+    container_name: ECOMOrdersServiceAPI
+    build:
+      context: ./OrdersService
+      dockerfile: Dockerfile
+    image: ecomordersserviceapi:1
+    restart: always
+    hostname: ECOMOrdersServiceAPI
+    ports: 
+      - "5036:80"
+    networks:
+      - netECOM
+    depends_on:
+      - ECOMSQLServerOrders
+      - ECOMEurekaRegistry
+      - ECOMAPIGateway

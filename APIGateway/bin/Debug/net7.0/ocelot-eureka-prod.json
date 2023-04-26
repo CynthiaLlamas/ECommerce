@@ -1,0 +1,73 @@
+{
+"Routes": [
+    {
+    "ServiceName": "ECOMCatalogService",
+    "DownstreamPathTemplate": "/{everything}",
+    "UpstreamPathTemplate": "/catalog/{everything}",
+    "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+    ],
+    "FileCacheOptions": {
+        "TtlSeconds": 15
+    },
+    "LoadBalancerOptions": {
+        "Type": "LeastConnection",
+        "Key": null,
+        "Expiry": 0
+    }
+    },
+    {
+    "ServiceName": "ECOMCartService",
+    "DownstreamPathTemplate": "/{everything}",
+    "UpstreamPathTemplate": "/cart/{everything}",
+    "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+    ],
+    "FileCacheOptions": {
+        "TtlSeconds": 15
+    },
+    "LoadBalancerOptions": {
+        "Type": "LeastConnection",
+        "Key": null,
+        "Expiry": 0
+    }
+    },
+    {
+    "ServiceName": "ECOMOrderService",
+    "DownstreamPathTemplate": "/{everything}",
+    "UpstreamPathTemplate": "/order/{everything}",
+    "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+    ],
+    "FileCacheOptions": {
+        "TtlSeconds": 15
+    },
+    "LoadBalancerOptions": {
+        "Type": "LeastConnection",
+        "Key": null,
+        "Expiry": 0
+    }
+    }
+],
+"GlobalConfiguration": {
+    "BaseUrl": "http://ECOMAPIGateway:80",
+    "RequestIdKey": "OcRequestId",
+    "DownstreamScheme": "http",
+    "ReRoutesCaseSensitive": false,
+    "UseServiceDiscovery": true,
+    "ServiceDiscoveryProvider": {
+    "Host": "SEN300EurekaRegistry",
+    "Port": 8761,
+    "Type": "Eureka"
+    }
+}
+}

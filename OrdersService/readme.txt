@@ -1,0 +1,1 @@
+docker run --name OrdersServiceECOM_DB_SqlServer -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=abc123!!@" -p 1413:1433 --net netECOM -d mcr.microsoft.com/mssql/server:2019-latest

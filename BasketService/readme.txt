@@ -1,0 +1,1 @@
+docker run -d --name CartServiceDB_Redis -p 6179:6379 --net netECOM redis:latest
