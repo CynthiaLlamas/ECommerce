@@ -1,10 +1,12 @@
 package llamas.cynthia.Catalog;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.UUID;
 
+@Document(collection = "items")
 public class Item {
     @Id
     private UUID itemGuid;

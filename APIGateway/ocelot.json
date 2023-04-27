@@ -1,83 +1,65 @@
 {
     "Routes": [
         {
-        "ServiceName": "ECOMCatalogServiceAPI",
-        "DownstreamPathTemplate": "/api/catalog/{everything}",
-        "DownstreamHostAndPorts":[
-            {
-                "Host":"ECOMCatalogServiceAPI",
-                "Port": 8080
+            "ServiceName": "ECOMCatalogServiceAPI",
+            "DownstreamPathTemplate": "/{everything}",
+            "UpstreamPathTemplate": "/catalog/{everything}",
+            "UpstreamHttpMethod": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE"
+            ],
+            "FileCacheOptions": {
+                "TtlSeconds": 15
+            },
+            "LoadBalancerOptions": {
+                "Type": "LeastConnection",
+                "Key": null,
+                "Expiry": 0
             }
-        ],
-        "UpstreamPathTemplate": "/catalog/{everything}",
-        "UpstreamHttpMethod": [
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE"
-        ],
-        "FileCacheOptions": {
-            "TtlSeconds": 15
-        },
-        "LoadBalancerOptions": {
-            "Type": "LeastConnection",
-            "Key": null,
-            "Expiry": 0
-        }
         },
         {
-        "ServiceName": "ECOMCartServiceAPI",
-        "DownstreamPathTemplate": "api/cart/{everything}",
-        "DownstreamHostAndPorts":[
-            {
-                "Host": "ECOMCartServiceAPI",
-                "Port":8080
+            "ServiceName": "ECOMCartServiceAPI",
+            "DownstreamPathTemplate": "/{everything}",
+            "UpstreamPathTemplate": "/basket/{everything}",
+            "UpstreamHttpMethod": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE"
+            ],
+            "FileCacheOptions": {
+                "TtlSeconds": 15
+            },
+            "LoadBalancerOptions": {
+                "Type": "LeastConnection",
+                "Key": null,
+                "Expiry": 0
             }
-        ],
-        "UpstreamPathTemplate": "/cart/{everything}",
-        "UpstreamHttpMethod": [
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE"
-        ],
-        "FileCacheOptions": {
-            "TtlSeconds": 15
-        },
-        "LoadBalancerOptions": {
-            "Type": "LeastConnection",
-            "Key": null,
-            "Expiry": 0
-        }
         },
         {
-        "ServiceName": "ECOMOrdersServiceAPI",
-        "DownstreamPathTemplate": "/api/order/{everything}",
-        "DownstreamHostAndPorts":[
-            {
-                "Host": "ECOMOrdersServiceAPI",
-                "Port":80
+            "ServiceName": "ECOMOrdersServiceAPI",
+            "DownstreamPathTemplate": "/{everything}",
+            "UpstreamPathTemplate": "/order/{everything}",
+            "UpstreamHttpMethod": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE"
+            ],
+            "FileCacheOptions": {
+                "TtlSeconds": 15
+            },
+            "LoadBalancerOptions": {
+                "Type": "LeastConnection",
+                "Key": null,
+                "Expiry": 0
             }
-        ],
-        "UpstreamPathTemplate": "/order/{everything}",
-        "UpstreamHttpMethod": [
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE"
-        ],
-        "FileCacheOptions": {
-            "TtlSeconds": 15
-        },
-        "LoadBalancerOptions": {
-            "Type": "LeastConnection",
-            "Key": null,
-            "Expiry": 0
-        }
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "http://localhost:80",
+        "BaseUrl": "http://ECOMAPIGateway:80",
         "RequestIdKey": "OcRequestId",
         "DownstreamScheme": "http",
         "ReRoutesCaseSensitive": false,
@@ -88,4 +70,4 @@
             "Type": "Eureka"
         }
     }
-    }
+}
