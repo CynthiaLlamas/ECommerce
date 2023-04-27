@@ -1,8 +1,10 @@
 using Dapper;
 using System.Data;
-public class UserRepository: IUserRepository{
+public class UserRepository : IUserRepository
+{
     private readonly DapperContext _context;
-    public UserRepository(DapperContext context){
+    public UserRepository(DapperContext context)
+    {
         _context = context;
     }
 
@@ -16,10 +18,11 @@ public class UserRepository: IUserRepository{
         parametersUsers.Add("Username", user.Username, DbType.String);
         parametersUsers.Add("Email", user.Email, DbType.String);
         parametersUsers.Add("Password", user.Password, DbType.String);
-        parametersUsers.Add("CreatedDate",DateTime.UtcNow,DbType.DateTime);
-        
-        using (var connection = _context.CreateConnection()){
-            await connection.ExecuteAsync(sql,parametersUsers);
+        parametersUsers.Add("CreatedDate", DateTime.UtcNow, DbType.DateTime);
+
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, parametersUsers);
         }
         return userGuid;
     }
@@ -27,7 +30,8 @@ public class UserRepository: IUserRepository{
     public async Task<IEnumerable<User>> GetAll()
     {
         string sql = "SELECT * FROM Users";
-        using (var connection = _context.CreateConnection()){
+        using (var connection = _context.CreateConnection())
+        {
             var users = await connection.QueryAsync<User>(sql);
             return users.ToList();
         }
@@ -36,25 +40,29 @@ public class UserRepository: IUserRepository{
     public async Task<User> GetByCredentials(string userEmail, string userPassword)
     {
         string sql = "SELECT * FROM Users WHERE Email = @EmailParam AND PASSOWRD = @PasswordParam";
-        using (var connection = _context.CreateConnection()){
-            return await connection.QueryFirstOrDefaultAsync<User>(sql, new {EmailParam = userEmail,PasswordParam = userPassword});
+        using (var connection = _context.CreateConnection())
+        {
+            return await connection.QueryFirstOrDefaultAsync<User>(sql, new { EmailParam = userEmail, PasswordParam = userPassword });
         }
     }
 
     public async Task<User> GetByUserEmail(string userEmail)
     {
         string sql = "SELECT * FROM Users Where Email = @EmailParam";
-        using(var connection= _context.CreateConnection()){
-            return await connection.QueryFirstOrDefaultAsync<User>(sql,new {EmailParam = userEmail});
+        using (var connection = _context.CreateConnection())
+        {
+            return await connection.QueryFirstOrDefaultAsync<User>(sql, new { EmailParam = userEmail });
         }
     }
 
-    public async Task<User> GetByUserGuid(Guid userGuid)
+    public async Task<User> GetByUserGUID(Guid userGuid)
     {
         string sql = "SELECT * FROM Users WHERE UserGuid = @UserGuidParam";
-        using (var connection = _context.CreateConnection()){
-            return await connection.QuerySingleAsync<User>(sql, new {UserGuidParam=userGuid});
+        using (var connection = _context.CreateConnection())
+        {
+            return await connection.QuerySingleAsync<User>(sql, new { UserGuidParam = userGuid });
         }
         throw new NotImplementedException();
     }
+
 }
