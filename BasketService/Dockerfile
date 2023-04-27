@@ -6,7 +6,7 @@ RUN mvn -f /home/app/pom.xml clean package
 FROM tomcat:11.0.0-jdk17
 COPY --from=build /home/app/target/ECOMCartServiceAPI.war /usr/local/tomcat/webapps/ROOT.war
 
-ENV SERVER_PORT=2
+ENV SERVER_PORT=8080
 ENV REDIS_HOST=ECOMRedisCart
 ENV REDIS_PORT=6379
 ENV EUREKA_HOST=ECOMEurekaRegistry
