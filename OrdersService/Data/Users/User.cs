@@ -1,16 +1,19 @@
 using System.ComponentModel.DataAnnotations;
-public class User{
+
+public class User
+{
     [Key]
     public Guid UserGuid { get; set; }
     [Required]
-    public String Username { get; set; }
+    public string Username { get; set; }
     [Required]
-    public String Email { get; set; }
+    public string Email { get; set; }
     [Required]
-    public String Password { get; set; }
+    public string Password { get; set; }
     [Required]
     public DateTime CreatedDate { get; set; }
-    string toString(){
+    string toString()
+    {
         return this.UserGuid.ToString();
     }
 }

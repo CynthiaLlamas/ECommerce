@@ -1,3 +1,5 @@
+
+
 {
   "Logging": {
     "LogLevel": {
@@ -6,9 +8,8 @@
     }
   },
   "ConnectionStrings": {
-    "conn_ordersservice_sqlserver": "Server=ECOMSQLServerOrders,1433;database=OrdersServiceDB;User ID=SA;password=abc123!!@;TrustServerCertificate=True;"
+    "conn_ordersservice_sqlserver": "Server=ECOMSQLServerOrders,1413;database=OrdersServiceDB;User ID=sa;password=abc123!!@;TrustServerCertificate=True;"
   },
-  "AllowedHosts": "*",
   "Jwt": {
     "Issuer": "https://ccantera.com/",
     "Audience": "https://ccantera.com/",
@@ -29,5 +30,6 @@
     "Instance": {
       "NonSecurePort": 80
     }
-  }
+  },
+  "AllowedHosts": "*"
 }

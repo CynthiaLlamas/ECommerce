@@ -24,21 +24,33 @@ services:
       - "6378:6379"
     networks:
       - netECOM
-  
+
   ECOMSQLServerOrders:
-    container_name: ECOMSQLServerOrders
     image: mcr.microsoft.com/mssql/server:2019-latest
-    restart: always
-    # hostname: ECOMSQLServerOrders
+    container_name: ECOMSQLServerOrders
+    environment:
+      SA_PASSWORD: abc123!!@
+      ACCEPT_EULA: Y
     ports:
-      - "1413:1433"
-    networks:
-      - netECOM
+      - '1433:1433'
     volumes:
       - mssqldata:/var/opt/mssql
-    environment:
-      SA_PASSWORD: "abc123!!@"
-      ACCEPT_EULA: "Y"
+    networks:
+      - netECOM
+
+  # ECOMSQLServerOrders:
+  #   container_name: ECOMSQLServerOrders
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   environment:
+  #     SA_PASSWORD: "abc123!!@"
+  #     ACCEPT_EULA: "Y"
+  #   ports:
+  #     - "1413:1433"
+  #   networks:
+  #     - netECOM
+  #   volumes:
+  #     - mssqldata:/var/opt/mssql
+
   
   ECOMEurekaRegistry:
     container_name: ECOMEurekaRegistry
