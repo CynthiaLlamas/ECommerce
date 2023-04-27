@@ -1,17 +1,15 @@
-version: "3.8"
-
-networks:
-  netECOM:
-    external: false
+version: "3"
 
 services:
   ECOMMongoCatalog:
     container_name: ECOMMongoCatalog
     image: mongo:latest
     restart: always
-    hostname: ECOMMongoCatalog
+    # hostname: ECOMMongoCatalog
     ports:
-      - "2717:27017"
+      - "27017:27017"
+    volumes:
+      - mongodb_data_container:/data/db
     networks:
       - netECOM
   
@@ -19,7 +17,9 @@ services:
     container_name: ECOMRedisCart
     image: redis:latest
     restart: always
-    hostname: ECOMRedisCart
+    # hostname: ECOMRedisCart~
+    volumes:
+      - redis_cache:/data
     ports:
       - "6378:6379"
     networks:
@@ -29,11 +29,13 @@ services:
     container_name: ECOMSQLServerOrders
     image: mcr.microsoft.com/mssql/server:2019-latest
     restart: always
-    hostname: ECOMSQLServerOrders
+    # hostname: ECOMSQLServerOrders
     ports:
       - "1413:1433"
     networks:
       - netECOM
+    volumes:
+      - mssqldata:/var/opt/mssql
     environment:
       SA_PASSWORD: "abc123!!@"
       ACCEPT_EULA: "Y"
@@ -57,7 +59,7 @@ services:
     restart: always
     hostname: ECOMAPIGateway
     ports:
-      - "5288:80"
+      - "5041:80"
     networks:
       - netECOM
   
@@ -87,7 +89,7 @@ services:
     restart: always
     hostname: ECOMCartServiceAPI
     ports:
-      - "3030:8080"
+      - "8082:8080"
     networks:
       - netECOM
     depends_on:
@@ -103,10 +105,20 @@ services:
     restart: always
     hostname: ECOMOrdersServiceAPI
     ports: 
-      - "5036:80"
+      - "8083:80"
     networks:
       - netECOM
     depends_on:
       - ECOMSQLServerOrders
       - ECOMEurekaRegistry
       - ECOMAPIGateway
+
+volumes:
+  mongodb_data_container:
+  mssqldata:
+  redis_cache:
+    driver: local
+
+networks:
+  netECOM:
+    name: netECOM

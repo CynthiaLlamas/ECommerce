@@ -5,7 +5,10 @@ import org.springframework.data.annotation.Id;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Item implements Serializable{
+public class Item implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+
     @Id
     private UUID itemGuid;
     private String name;

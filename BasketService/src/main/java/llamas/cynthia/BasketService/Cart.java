@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 public class Cart implements Serializable {
-    private static final long serialversionUID = 1l;
+
+    private static final long serialVersionUID = 1L;
+    
     @Id
     private String cartGuid;
     private List<Item> items = new ArrayList<>();
