@@ -93,37 +93,43 @@ services:
       - ECOMAPIGateway
   
   ECOMCartServiceAPI:
-    container_name: ECOMCartServiceAPI
+    #container_name: ECOMCartServiceAPI
     build: 
       context: ./BasketService
       dockerfile: Dockerfile
     image: ecomcartserviceapi:1
     restart: always
     # hostname: ECOMCartServiceAPI
-    ports:
-      - "8082:8080"
+    # ports:
+    #   - "8082:8080"
     networks:
       - netECOM
     depends_on:
       - ECOMRedisCart
       - ECOMEurekaRegistry
       - ECOMAPIGateway
+    deploy:
+      mode: replicated
+      replicas: 3
   ECOMOrdersServiceAPI:
-    container_name: ECOMOrdersServiceAPI
+    #container_name: ECOMOrdersServiceAPI
     build:
       context: ./OrdersService
       dockerfile: Dockerfile
     image: ecomordersserviceapi:1
     restart: always
     # hostname: ECOMOrdersServiceAPI
-    ports: 
-      - "8083:80"
+    # ports: 
+    #   - "8083:80"
     networks:
       - netECOM
     depends_on:
       - ECOMSQLServerOrders
       - ECOMEurekaRegistry
       - ECOMAPIGateway
+    deploy:
+      mode: replicated
+      replicas: 3
 
 volumes:
   mongodb_data_container:
